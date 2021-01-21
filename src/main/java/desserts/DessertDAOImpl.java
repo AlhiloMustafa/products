@@ -7,6 +7,7 @@ import java.util.List;
 public class DessertDAOImpl implements DessertDAO {
 
     final static String SELECT_ALL_SQL = "select id, name, good from goodstuff";
+    final static String SELECT_ONE_BY_ID= "select name from goodstuff where id=?";
     final static String INSERT_SQL = "insert into goodstuff (name, good) values (?, ?)";
     final static String BY_NAME_SQL = "select id, name, good from goodstuff order by name asc";
 
@@ -28,6 +29,7 @@ public class DessertDAOImpl implements DessertDAO {
 
     @Override
     public List<DessertDTO> getDesserts() {
+
         List<DessertDTO> desserts = new ArrayList<>();
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(SELECT_ALL_SQL);
@@ -41,6 +43,24 @@ public class DessertDAOImpl implements DessertDAO {
             System.out.println("unable to run query");
             e.printStackTrace();
         }
+        return desserts;
+    }
+
+
+
+    public List getOne() throws SQLException, ClassNotFoundException {
+
+        List<String> desserts = new ArrayList<>();
+            try(Statement stmt=conn.createStatement()) {
+                ResultSet rs=stmt.executeQuery(SELECT_ONE_BY_ID);
+                while (rs.next()){
+                    String name=rs.getString("name");
+                    desserts.add(name);
+                }
+            }catch (SQLException e){
+                System.out.println("Unable to run");
+            }
+
         return desserts;
     }
 

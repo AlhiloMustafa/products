@@ -19,18 +19,17 @@ public class ShowProductsServlet extends HttpServlet {
         dessertDTO = new DessertDAOImpl();
     }
 
-    public void doGet(HttpServletRequest request,
-                      HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
         out.println("<form action='' method='POST'>");
-        out.println("<label>Enter Dessert Name: <input type='text' name='dessert-name'></input></label>");
+        out.println("<label>Enter Products id : <input type='text' name='dessert-name'></input></label>");
         out.println("<label>Enter If Good: <input type='radio' name='dessert-good' value='0' />No <input type='radio' name='dessert-good' value='1' />Yes</label>");
         out.println("<input type='submit'>Create Dessert</input>");
         out.println("</form>");
+        out.println("<h2>Products</h2>");
 
-        out.println("<h2>Desserts</h2>");
         for (DessertDTO dessert: dessertDTO.getDesserts()) {
             out.println("<p>" + dessert.getId() + ": " + dessert.getName() + " It is good:" + dessert.isGood() + "</p>");
         }
